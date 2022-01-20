@@ -1,9 +1,5 @@
-
-
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 
 class info1 extends StatefulWidget {
   const info1({Key? key}) : super(key: key);
@@ -13,28 +9,22 @@ class info1 extends StatefulWidget {
 }
 
  class _info1State extends State<info1> {
-   final weight = TextEditingController();
-   final height = TextEditingController();
+
 
 
    
-@override
-void dispose() {
-  weight.dispose();
-  height.dispose();
-  super.dispose();
-}
+
 
 double bmi = 0;
 
 
-   String result(int a, int b){
-     double bmi = b/pow(a/100, 2);
-     return bmi.toStringAsFixed(1);
-   }
-   double _value = 0;
 
-   String about (int bmi){
+   int value1 = 0;
+   int value2 = 70;
+   int value3 = 170;
+   int _result = 0;
+
+   String about (int _result){
         if( bmi >= 25) {
           return "You have higher than normal body weight, try to exercise more";
         }
@@ -50,6 +40,7 @@ double bmi = 0;
    @override
    Widget build(BuildContext context) {
      return Scaffold(
+         resizeToAvoidBottomInset: false,
          body: Container(
            decoration: BoxDecoration(
              image: DecorationImage(
@@ -60,12 +51,12 @@ double bmi = 0;
            child: Column(
              children: <Widget>[
                Padding(
-                 padding: const EdgeInsets.only(top: 60, left: 80),
+                 padding: const EdgeInsets.only(top: 50, left: 80),
                  child: Row(children: <Widget>[
                    Container(
                      child: Column(children: <Widget>[
                        Padding(
-                         padding: const EdgeInsets.only(left: 65, top: 30),
+                         padding: const EdgeInsets.only(left: 85, top: 20),
                          child: Row(children: <Widget>[
                            Text(
                              'Height',
@@ -78,23 +69,33 @@ double bmi = 0;
                          ]
                          ),
                        ),
-
                        Padding(
-                           padding: const EdgeInsets.only(left: 5, top: 20),
-                           child: new SizedBox(
-                             height: 70,
-                             width: 200,
-                             child:
-                             new TextField(
-                               decoration: new InputDecoration(
-                                   labelText: "Enter your Height in cm"),
-                               controller: height,
-                               keyboardType: TextInputType.number,
-                               inputFormatters: <TextInputFormatter>[
-                                 FilteringTextInputFormatter.digitsOnly
-                               ], // Only numbers can be entered
-                             ),
-                           )),
+                         padding: const EdgeInsets.only(left: 80, top: 30),
+                         child: Row(children: [
+                           Text(value3.toString().toUpperCase(),
+                               style: TextStyle(fontSize: 20)),
+                           Row(children: [
+                             Text(' Cm', style: TextStyle(fontSize: 20))
+                           ],)
+                         ],),
+                       ),
+                       Padding(
+                         padding: const EdgeInsets.only(left: 30, top: 20),
+                         child: Row(children: [
+                           Slider(
+                             min: 0,
+                             max: 200,
+                             value: value3.toDouble(),
+                             divisions: 200,
+                             label: '${value3.round()}',
+                             onChanged: (value) {
+                               setState(() {
+                                 value3 = value.toInt();
+                               });
+                             },
+                           )
+                         ]),
+                       ),
                      ]),
 
                      height: 194,
@@ -112,7 +113,7 @@ double bmi = 0;
                    Container(
                      child: Column(children: <Widget>[
                        Padding(
-                         padding: const EdgeInsets.only(left: 65, top: 30),
+                         padding: const EdgeInsets.only(left: 85, top: 20),
                          child: Row(children: <Widget>[
                            Text(
                              'Weight',
@@ -125,23 +126,33 @@ double bmi = 0;
                          ]
                          ),
                        ),
-
                        Padding(
-                           padding: const EdgeInsets.only(left: 5, top: 20),
-                           child: new SizedBox(
-                             height: 70,
-                             width: 200,
-                             child:
-                             new TextField(
-                               decoration: new InputDecoration(
-                                   labelText: "Enter your Weight in Kg"),
-                               controller: weight,
-                               keyboardType: TextInputType.number,
-                               inputFormatters: <TextInputFormatter>[
-                                 FilteringTextInputFormatter.digitsOnly
-                               ], // Only numbers can be entered
-                             ),
-                           )),
+                         padding: const EdgeInsets.only(left: 80, top: 30),
+                         child: Row(children: [
+                           Text(value2.toString().toUpperCase(),
+                               style: TextStyle(fontSize: 20)),
+                           Row(children: [
+                             Text(' Kg', style: TextStyle(fontSize: 20))
+                           ],)
+                         ],),
+                       ),
+                       Padding(
+                         padding: const EdgeInsets.only(left: 30, top: 20),
+                         child: Row(children: [
+                           Slider(
+                             min: 0,
+                             max: 120,
+                             value: value2.toDouble(),
+                             divisions: 120,
+                             label: '${value2.round()}',
+                             onChanged: (value) {
+                               setState(() {
+                                 value2 = value.toInt();
+                               });
+                             },
+                           )
+                         ]),
+                       ),
                      ]),
 
                      height: 194,
@@ -175,7 +186,7 @@ double bmi = 0;
                        Padding(
                          padding: const EdgeInsets.only(left: 80, top: 30),
                          child: Row(children: [
-                           Text(_value.toString(),
+                           Text(value1.toString().toUpperCase(),
                                style: TextStyle(fontSize: 20)),
                            Row(children: [
                              Text(' Years', style: TextStyle(fontSize: 20))
@@ -186,14 +197,14 @@ double bmi = 0;
                          padding: const EdgeInsets.only(left: 30, top: 20),
                          child: Row(children: [
                            Slider(
-                             min: 0.0,
-                             max: 100.0,
-                             value: _value,
+                             min: 0,
+                             max: 100,
+                             value: value1.toDouble(),
                              divisions: 100,
-                             label: '${_value.round()}',
+                             label: '${value1.round()}',
                              onChanged: (value) {
                                setState(() {
-                                 _value = value;
+                                 value1 = value.toInt();
                                });
                              },
                            )
@@ -239,6 +250,13 @@ double bmi = 0;
          ));
    }
 
+
+   int result() {
+     int _result = (value2/((value3/100) * (value3/100))).round().toInt();
+
+    return _result;
+   }
+
    showAlertDialog(BuildContext context) {
      // Create button
      Widget okButton = TextButton(
@@ -251,23 +269,38 @@ double bmi = 0;
      // Create AlertDialog
      AlertDialog alert = AlertDialog(
        title: Text("Your BMI"),
-       content: Column(children: <Widget>[
-         Row(children: <Widget>[
-         Text(result(weight.text.length,height.text.length).toString()),]),
-         Padding(
-           padding: const EdgeInsets.only(right: 100),
-           child: new SizedBox(
-             child: Row(children: <Widget>[
-           Text(about(bmi.toInt()).toString()),
-       ],),
-           ),
-         )]),
+       content: Container(
+         child: SizedBox(
+           height: MediaQuery.of(context).size.height / 4,
+           child: Column(
+             mainAxisAlignment: MainAxisAlignment.spaceAround,
+             children: [
+               Expanded(
+                 flex: 1,
+                 child: Container(
+                   child: Text(
+                     _result.toStringAsFixed(2)
+                     ,style: TextStyle(
+                       color: Colors.redAccent,
+                       fontSize: 19.4,
+                       fontWeight: FontWeight.w500,
+                     ),
+                   )
+                       )),
 
+
+               Expanded(
+                 flex: 9,
+                 child: Container(child: Text(about(_result.toInt()).toString())),
+               )
+             ],
+           ),
+         ),
+       ),
        actions: [
          okButton,
        ],
      );
-
      // show the dialog
      showDialog(
        context: context,
