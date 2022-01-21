@@ -1,9 +1,7 @@
-
-
+import 'package:flutter/material.dart';
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 
 class info2 extends StatefulWidget {
   const info2({Key? key}) : super(key: key);
@@ -13,25 +11,30 @@ class info2 extends StatefulWidget {
 }
 
 class _info2State extends State<info2> {
-  final weight = TextEditingController();
-  final height = TextEditingController();
 
-  @override
-  void dispose() {
-    weight.dispose();
-    height.dispose();
-    super.dispose();
-  }
+  int height = 180;
+  int weight = 70;
+  int age = 25;
+  String _result = "";
+  String resultDetail = "result here";
+  double bmi = 0;
 
-
-
-
-  String result(int a, int b){
-    double bmi = b/pow(a/100, 2);
+  String calculateBmi(int weight,int height){
+    double bmi = weight/pow(height/100, 2);
     return bmi.toStringAsFixed(1);
   }
-  double _value = 0;
 
+  String about (int bmi){
+    if( bmi >= 25) {
+      return "You have higher than normal body weight, try to exercise more";
+    }
+    else if(bmi >18){
+      return "You have a normal body weight, Good job";
+    }
+    else{
+      return "You have lower than normal body weight,you can eat a bit more";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +50,12 @@ class _info2State extends State<info2> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 60, left: 80),
+                padding: const EdgeInsets.only(top: 50, left: 80),
                 child: Row(children: <Widget>[
                   Container(
                     child: Column(children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(left: 65, top: 30),
+                        padding: const EdgeInsets.only(left: 70, top: 20),
                         child: Row(children: <Widget>[
                           Text(
                             'Height',
@@ -65,30 +68,48 @@ class _info2State extends State<info2> {
                         ]
                         ),
                       ),
-
                       Padding(
-                          padding: const EdgeInsets.only(left: 5, top: 20),
-                          child: new SizedBox(
-                            height: 70,
-                            width: 200,
-                            child:
-                            new TextField(
-                              decoration: new InputDecoration(
-                                  labelText: "Enter your Height in cm"),
-                              controller: height,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ], // Only numbers can be entered
+                        padding: const EdgeInsets.only(left: 90, top: 20),
+                        child: Row(children: [
+                          Text(height.toString().toUpperCase(),
+                              style: TextStyle(fontSize: 20)),
+                          Row(children: [
+                            Text(' Cm', style: TextStyle(fontSize: 20))
+                          ],)
+                        ],),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30, top: 20),
+                        child: Row(children: [
+                          SliderTheme(
+                            data: SliderTheme.of(context).copyWith(
+                              inactiveTrackColor: Color(0xFF8D8E98),
+                              activeTrackColor: Colors.white,
+                              thumbColor: Color(0xFFEB1555),
+                              overlayColor: Color(0x29EB1555),
+                              thumbShape:
+                              RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                              overlayShape:
+                              RoundSliderOverlayShape(overlayRadius: 30.0),
                             ),
-                          )),
+                            child: Slider(
+                                value: height.toDouble(),
+                                min: 120.0,
+                                max: 220.0,
+                                onChanged: (double newValue) {
+                                  setState(() {
+                                    height = newValue.round();
+                                  });
+                                }),
+                          ),
+                        ]),),
                     ]),
 
                     height: 194,
                     width: 250,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      color: Colors.green,
+                      color: Color(0xFF6BCABE)
                     ),
                   ),
                 ]),),
@@ -99,7 +120,7 @@ class _info2State extends State<info2> {
                   Container(
                     child: Column(children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(left: 65, top: 30),
+                        padding: const EdgeInsets.only(left: 65, top: 20),
                         child: Row(children: <Widget>[
                           Text(
                             'Weight',
@@ -112,30 +133,48 @@ class _info2State extends State<info2> {
                         ]
                         ),
                       ),
-
                       Padding(
-                          padding: const EdgeInsets.only(left: 5, top: 20),
-                          child: new SizedBox(
-                            height: 70,
-                            width: 200,
-                            child:
-                            new TextField(
-                              decoration: new InputDecoration(
-                                  labelText: "Enter your Weight in Kg"),
-                              controller: weight,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ], // Only numbers can be entered
+                        padding: const EdgeInsets.only(left: 90, top: 20),
+                        child: Row(children: [
+                          Text(weight.toString().toUpperCase(),
+                              style: TextStyle(fontSize: 20)),
+                          Row(children: [
+                            Text(' Kg', style: TextStyle(fontSize: 20))
+                          ],)
+                        ],),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30, top: 20),
+                        child: Row(children: [
+                          SliderTheme(
+                            data: SliderTheme.of(context).copyWith(
+                              inactiveTrackColor: Color(0xFF8D8E98),
+                              activeTrackColor: Colors.white,
+                              thumbColor: Color(0xFFEB1555),
+                              overlayColor: Color(0x29EB1555),
+                              thumbShape:
+                              RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                              overlayShape:
+                              RoundSliderOverlayShape(overlayRadius: 30.0),
                             ),
-                          )),
+                            child: Slider(
+                                value: weight.toDouble(),
+                                min: 30.0,
+                                max: 120.0,
+                                onChanged: (double newValue) {
+                                  setState(() {
+                                    weight = newValue.round();
+                                  });
+                                }),
+                          ),
+                        ]),),
                     ]),
 
                     height: 194,
                     width: 250,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      color: Colors.green,
+                      color: Color(0xFF6BCABE),
                     ),
                   ),
                 ]),),
@@ -160,9 +199,9 @@ class _info2State extends State<info2> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 80, top: 30),
+                        padding: const EdgeInsets.only(left: 80, top: 20),
                         child: Row(children: [
-                          Text(_value.toString(),
+                          Text(age.toString().toUpperCase(),
                               style: TextStyle(fontSize: 20)),
                           Row(children: [
                             Text(' Years', style: TextStyle(fontSize: 20))
@@ -172,27 +211,34 @@ class _info2State extends State<info2> {
                       Padding(
                         padding: const EdgeInsets.only(left: 30, top: 20),
                         child: Row(children: [
-                          Slider(
-                            min: 0.0,
-                            max: 100.0,
-                            value: _value,
-                            divisions: 100,
-                            label: '${_value.round()}',
-                            onChanged: (value) {
-                              setState(() {
-                                _value = value;
-                              });
-                            },
-                          )
-                        ]),
-                      ),
+                          SliderTheme(
+                            data: SliderTheme.of(context).copyWith(
+                              inactiveTrackColor: Color(0xFF8D8E98),
+                              activeTrackColor: Colors.white,
+                              thumbColor: Color(0xFFEB1555),
+                              overlayColor: Color(0x29EB1555),
+                              thumbShape:
+                              RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                              overlayShape:
+                              RoundSliderOverlayShape(overlayRadius: 30.0),
+                            ),
+                            child: Slider(
+                                value: age.toDouble(),
+                                min: 0.0,
+                                max: 120.0,
+                                onChanged: (double newValue) {
+                                  setState(() {
+                                    age = newValue.round();
+                                  });
+                                }),
+                          ),
+                        ]),),
                     ]),
-
                     height: 194,
                     width: 250,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      color: Colors.green,
+                      color: Color(0xFF6BCABE),
                     ),
                   ),
                 ]),),
@@ -204,23 +250,25 @@ class _info2State extends State<info2> {
                   height: 80,
                   width: 300,
                   child: ElevatedButton(
-                    child: Text("Calculate",
-                        style:
-                        TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-                    onPressed: () {
-                      showAlertDialog(context);
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.0),
-                              side: BorderSide(color: Colors.red))),
-                    ),
-                  ),
+                      child: Text("Calculate",
+                          style:
+                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        _result = calculateBmi(weight, height);
+                        resultDetail = about(bmi.toInt());
+                        showAlertDialog(context);},
+                        style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blue),
+                          shape: MaterialStateProperty.all<
+                              RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  side: BorderSide(color: Colors.blue))),
+    ))
+                       ),
                 ),
-              )
+
             ],
           ),
         ));
@@ -238,12 +286,38 @@ class _info2State extends State<info2> {
     // Create AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Your BMI"),
-      content: Text(result(weight.text.length,height.text.length).toString()),
+      content: Container(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height / 4,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                      child: Text(
+                        _result.toString()
+                        ,style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 19.4,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      )
+                  )),
+
+
+              Expanded(
+                  flex: 9,
+                  child: Container(child: Text(resultDetail),
+                  )
+              )],
+          ),
+        ),
+      ),
       actions: [
         okButton,
       ],
     );
-
     // show the dialog
     showDialog(
       context: context,
@@ -252,7 +326,13 @@ class _info2State extends State<info2> {
       },
     );
   }
+
+
 }
+
+
+
+
 
 
 

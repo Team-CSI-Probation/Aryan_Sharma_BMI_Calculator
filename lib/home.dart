@@ -43,12 +43,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => info1()));
                 },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlueAccent),
+                style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    primary: Colors.red
                 ),
+
                 child: CircleAvatar(
                   radius: 120,
-                  backgroundImage: AssetImage("images/female.png"),
+                  backgroundImage: AssetImage("images/female1.png"),
                 ),
               ),
             ]),
@@ -62,12 +64,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => info2()));
                   },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlueAccent),
+                  style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(),
+                      primary: Colors.red
                   ),
                   child: CircleAvatar(
                     radius: 120,
-                    backgroundImage: AssetImage("images/male.png"),
+                    backgroundImage: AssetImage("images/male1.png"),
                   ),
                 )
               ],
