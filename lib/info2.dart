@@ -16,7 +16,6 @@ class _info2State extends State<info2> {
   int weight = 70;
   int age = 25;
   String _result = "";
-  String resultDetail = "result here";
   double bmi = 0;
 
   String calculateBmi(int weight,int height){
@@ -24,7 +23,7 @@ class _info2State extends State<info2> {
     return bmi.toStringAsFixed(1);
   }
 
-  String about (int bmi){
+  String about (double bmi){
     if( bmi >= 25) {
       return "You have higher than normal body weight, try to exercise more";
     }
@@ -224,7 +223,7 @@ class _info2State extends State<info2> {
                             ),
                             child: Slider(
                                 value: age.toDouble(),
-                                min: 0.0,
+                                min: 1.0,
                                 max: 120.0,
                                 onChanged: (double newValue) {
                                   setState(() {
@@ -255,7 +254,6 @@ class _info2State extends State<info2> {
                           TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
                       onPressed: () {
                         _result = calculateBmi(weight, height);
-                        resultDetail = about(bmi.toInt());
                         showAlertDialog(context);},
                         style: ButtonStyle(
                           backgroundColor:
@@ -285,7 +283,7 @@ class _info2State extends State<info2> {
 
     // Create AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Your BMI"),
+      title: Text("Your BMI",style: TextStyle(fontSize: 40)),
       content: Container(
         child: SizedBox(
           height: MediaQuery.of(context).size.height / 4,
@@ -299,17 +297,20 @@ class _info2State extends State<info2> {
                         _result.toString()
                         ,style: TextStyle(
                         color: Colors.redAccent,
-                        fontSize: 19.4,
+                        fontSize: 40,
                         fontWeight: FontWeight.w500,
                       ),
                       )
                   )),
 
 
-              Expanded(
-                  flex: 9,
-                  child: Container(child: Text(resultDetail),
-                  )
+              Padding(
+                padding: const EdgeInsets.only(top: 0),
+                child: Expanded(
+                    flex: 9,
+                    child: Container(child: Text(about(double.parse(_result)),style: TextStyle(fontSize: 30)),
+                    )
+                ),
               )],
           ),
         ),

@@ -16,7 +16,6 @@ int height = 180;
 int weight = 70;
 int age = 25;
 String _result = "";
-String resultDetail = "result here";
 double bmi = 0;
 
 String calculateBmi(int weight,int height){
@@ -24,15 +23,15 @@ String calculateBmi(int weight,int height){
   return bmi.toStringAsFixed(1);
 }
 
-String about (int bmi){
-  if( bmi >= 25) {
+String about (double bmi){
+  if( bmi >= 25.0) {
     return "You have higher than normal body weight, try to exercise more";
   }
-  else if(bmi >18){
+  else if(bmi >18.5 && bmi<25.0){
     return "You have a normal body weight, Good job";
   }
   else{
-    return "You have lower than normal body weight,you can eat a bit more";
+    return "You have lower than normal body weight, you can eat a bit more";
   }
 }
 
@@ -224,7 +223,7 @@ String about (int bmi){
                              ),
                              child: Slider(
                                  value: age.toDouble(),
-                                 min: 0.0,
+                                 min: 1.0,
                                  max: 120.0,
                                  onChanged: (double newValue) {
                                    setState(() {
@@ -255,7 +254,6 @@ String about (int bmi){
                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
                      onPressed: () {
                        _result = calculateBmi(weight, height);
-                       resultDetail = about(bmi.toInt());
                        showAlertDialog(context);},
                        style:
                        ButtonStyle(
@@ -274,7 +272,6 @@ String about (int bmi){
            ),
          ));
    }
-
 showAlertDialog(BuildContext context) {
   // Create button
   Widget okButton = TextButton(
@@ -286,7 +283,7 @@ showAlertDialog(BuildContext context) {
 
   // Create AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text("Your BMI"),
+    title: Text("Your BMI",style: TextStyle(fontSize: 40)),
     content: Container(
       child: SizedBox(
         height: MediaQuery.of(context).size.height / 4,
@@ -300,17 +297,21 @@ showAlertDialog(BuildContext context) {
                       _result.toString()
                       ,style: TextStyle(
                       color: Colors.redAccent,
-                      fontSize: 19.4,
+                      fontSize: 40,
                       fontWeight: FontWeight.w500,
                     ),
                     )
                 )),
 
 
-            Expanded(
-                flex: 9,
-                child: Container(child: Text(resultDetail),
-                )
+            Padding(
+              padding: const EdgeInsets.only(top: 0),
+              child: Expanded(
+                  flex: 9,
+                  child: Container(
+                    child: Text(about(double.parse(_result)),style: TextStyle(fontSize: 30),),
+                  )
+              ),
             )],
         ),
       ),
